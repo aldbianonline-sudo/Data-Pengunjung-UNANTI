@@ -1,0 +1,16 @@
+body {
+  box-sizing: border-box;
+  font-family: Sans-Serif;
+  margin: 0;
+  height: 100vh;
+  background-color: #F4F4F4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-card {
+  width: 430px;
+  background-color: #ffffff;
+  padding: 23px;
+  border-radius: 10px;
+}
