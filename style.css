@@ -20,5 +20,6 @@ body {
   height: 100px;
 }
 #text {
-  border-radius: 22px;
+  border-radius: 16px;
+  border-color: blue;
 }
