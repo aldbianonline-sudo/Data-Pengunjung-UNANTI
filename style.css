@@ -19,3 +19,6 @@ body {
   width: 100px;
   height: 100px;
 }
+#text {
+  border-radius: 12px;
+}
