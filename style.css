@@ -1,6 +1,6 @@
 body {
   box-sizing: border-box;
-  font-family: helvetica, courier-new;
+  font-family: sans-serif;
   margin: 0;
   height: 100vh;
   background-color: #F4F4F4;
@@ -22,4 +22,5 @@ body {
 #text {
   border-radius: 16px;
   border-color: blue;
+  font-family: Helvetica, courier-new;
 }
