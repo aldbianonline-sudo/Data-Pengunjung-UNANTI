@@ -1,21 +1,78 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<title>Login Perpustakaan UNANTI</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Login Perpustakaan UNANTI">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Absen Digital</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input, button { margin: 10px; padding: 10px; }
+        #dataDisplay { display: none; }
+    </style>
 </head>
 <body>
-<div class="login-card">
-  <img src="logo(1).png" id="logouniv">
-<h1>Perpustakaan Universitas Tridinanti Palembang</h1>
-<p>Silakan isi data pengunjung, ya! :D</p>
-<label>Masukan NIM/NPM</label><br>
-<input type="text" id="text" name="text"><br>
-<a href=""> Bukan Anggota </a><br>
-<button type="submit">Konfirmasi</button>
-</div>
+    <h1>Absen Digital Siswa</h1>
+    
+    <!-- Langkah 1: Form Login -->
+    <div id="loginForm">
+        <input type="number" id="nis" placeholder="Masukkan NIS">
+        <input type="password" id="password" placeholder="Masukkan Password">
+        <button onclick="login()">Submit</button>
+    </div>
+    
+    <!-- Langkah 3: Tampilkan Data -->
+    <div id="dataDisplay">
+        <p>NIS: <span id="displayNis"></span></p>
+        <p>NISN: <span id="displayNisn"></span></p>
+        <p>Nama: <span id="displayNama"></span></p>
+        <p>Kelas: <span id="displayKelas"></span></p>
+        <button onclick="confirmAbsen()">Konfirmasi Absen</button>
+    </div>
+    
+    <script>
+        var userData = {};
+        
+        function login() {
+            var nis = document.getElementById('nis').value;
+            var password = document.getElementById('password').value;
+            
+            fetch('https://script.google.com/macros/s/AKfycbx2hMlQw63VCC5tHjOUW6hAJzYJw1xukfQrW8bI53sD97Oocz96tWqBIGWPb4fOPjI2Hw/exec', {
+                method: 'POST',
+                body: JSON.stringify({ action: 'login', nis: nis, password: password }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    userData = data;
+                    document.getElementById('displayNis').textContent = data.nis;
+                    document.getElementById('displayNisn').textContent = data.nisn;
+                    document.getElementById('displayNama').textContent = data.nama;
+                    document.getElementById('displayKelas').textContent = data.kelas;
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('dataDisplay').style.display = 'block';
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+        
+        function confirmAbsen() {
+            fetch('https://script.google.com/macros/s/AKfycbx2hMlQw63VCC5tHjOUW6hAJzYJw1xukfQrW8bI53sD97Oocz96tWqBIGWPb4fOPjI2Hw/exec', {
+                method: 'POST',
+                body: JSON.stringify({ action: 'absen', nis: userData.nis, nama: userData.nama, kelas: userData.kelas }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Absen berhasil!');
+                    // Reset form atau redirect
+                    location.reload();
+                } else {
+                    alert('Gagal absen');
+                }
+            });
+        }
+    </script>
 </body>
-</html>
+  </html>
